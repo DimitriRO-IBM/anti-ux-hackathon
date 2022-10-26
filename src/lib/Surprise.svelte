@@ -1,29 +1,18 @@
 <script>
   import { onMount } from 'svelte'
+  import Scream from './Scream.svelte'
+
+  let showIframe = false;
 
   function spook() {
-    const tmp = document.createElement('button');
-    tmp.id = 'tmpSpooky';
-    tmp.addEventListener('click', playSpookySound);
-
     setTimeout(function () {
-      document.body.appendChild(tmp);
-      document.getElementById(tmp.id).click();
       document.getElementById('spookTheF').style.display = 'block';
+      showIframe = true;
       document.getElementById('spookTheF').onclick = function () {
+        showIframe = false;
         document.getElementById('spookTheF').style.display = 'none';
       };
     }, (Math.random() * (6000 - 3000) + 3000));
-  }
-
-  const playSpookySound = async () => {
-    const audio = new Audio('src/assets/audio/surprise.wav');
-    try {
-      await audio.play()
-    } catch (e) {
-      audio.muted = false;
-      await audio.play();
-    }
   }
 
   onMount(async () => {
@@ -45,3 +34,7 @@
 </style>
 
 <div id="spookTheF" on:load={spook}></div>
+
+{#if showIframe}
+    <Scream />
+{/if}
