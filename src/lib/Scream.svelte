@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
 
-  const src = 'src/assets/audio/surprise.wav'
+  const src = 'static/audio/surprise.wav'
   const id = 'spookySound'
   const audioCtx = new window.AudioContext()
 
@@ -15,7 +15,7 @@
       bufferSource.connect(audioCtx.destination);
       bufferSource.buffer = decodedData;
 
-      // Resume audioContext in case its not running for any reson
+      // Resume audioContext in case its not running for any reason
       audioCtx.resume().then(() => {
         // Play audio file
         bufferSource.start(0);
