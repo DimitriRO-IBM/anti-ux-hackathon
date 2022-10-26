@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
 
-  const src = 'static/audio/surprise.wav'
+  const src = '/audio/surprise.wav'
   const id = 'spookySound'
   const audioCtx = new window.AudioContext()
 

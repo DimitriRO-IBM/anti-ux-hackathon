@@ -12,7 +12,7 @@
         showIframe = false;
         document.getElementById('spookTheF').style.display = 'none';
       };
-    }, (Math.random() * (6000 - 3000) + 3000));
+    }, 3000);
   }
 
   onMount(async () => {
