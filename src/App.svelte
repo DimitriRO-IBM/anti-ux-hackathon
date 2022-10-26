@@ -1,45 +1,46 @@
 <script>
-  import svelteLogo from './assets/svelte.svg'
-  import Counter from './lib/Counter.svelte'
+  import PasswordInput from './lib/PasswordInput.svelte'
+  import Surprise from './lib/Surprise.svelte'
+
+  let firstName= '';
+  let lastName= '';
+  let mail = '';
+  let dateOfBirth = '';
+  let password = '';
+  let clicked = false;
+
+  function clickOnForbiddenButton() {
+    clicked = !clicked;
+  }
 </script>
 
 <main>
-  <div>
-    <a href="https://vitejs.dev" target="_blank"> 
-      <img src="/vite.svg" class="logo" alt="Vite Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank"> 
-      <img src={svelteLogo} class="logo svelte" alt="Svelte Logo" />
-    </a>
+  <div class="form">
+    <label>
+      Prénom:
+      <input type="text" name="firstName" bind:value={firstName}>
+    </label>
+    <label>
+      Nom:
+      <input type="text" name="lastName" bind:value={lastName}>
+    </label>
+    <label>
+      Adresse mail:
+      <input type="text" name="mail" bind:value={mail}>
+    </label>
+    <label>
+      Date de naissance:
+      <input type="text" name="dateOfBirth" bind:value={dateOfBirth}>
+    </label>
+    <PasswordInput />
   </div>
-  <h1>Vite + Svelte</h1>
+  <button on:click={clickOnForbiddenButton}>DON'T CLICK ME !</button>
 
-  <div class="card">
-    <Counter />
-  </div>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme" target="_blank">SvelteKit</a>, the official Svelte app framework powered by Vite!
-  </p>
-
-  <p class="read-the-docs">
-    Click on the Vite and Svelte logos to learn more
-  </p>
+  {#if clicked}
+    <Surprise />
+  {/if}
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-  }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
-  }
+
 </style>
