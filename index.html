@@ -2,9 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Svelte</title>
+    <title>AwEsOmE WeBsItE</title>
+    <script>
+      let title = 'An awesome and beautiful form';
+
+      function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
+
+      async function typewriteTitle() {
+        await sleep(1000);
+        document.title = '';
+        for (let i = 0; i < title.length; i++) {
+          document.title += title.charAt(i);
+          await sleep(200);
+        }
+      }
+      typewriteTitle();
+    </script>
   </head>
   <body>
     <div id="app"></div>
