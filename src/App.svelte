@@ -36,6 +36,9 @@
       input.addEventListener('keyup', e => {
         let operator = Math.random() >= 0.5 ? '+' : '-';
         eval(`initial ${operator}= translation`);
+        if (initial < 0) {
+          initial = 0;
+        }
         input.style.transform = `translateX(${initial}px)`
       })
     })

@@ -9,7 +9,7 @@
 
   function spook() {
     setTimeout(function () {
-      document.getElementById('spookTheF').style.display = 'block';
+      document.getElementById('spookTheF').style.display = 'flex';
       document.getElementById('creepyFace').style.display = 'block';
       let showSpookyFrame = true;
       document.getElementById('spookTheF').onclick = function () {
@@ -37,6 +37,7 @@
 
 <style>
     #spookTheF {
+        justify-content: center;
         position: fixed;
         top: 0;
         left: 0;
@@ -51,6 +52,6 @@
     #creepyFace {
         display: none;
         margin: auto;
-        height: inherit;
+        height: 100%;
     }
 </style>
