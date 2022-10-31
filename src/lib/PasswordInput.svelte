@@ -1,6 +1,7 @@
 <script>
   const TEXT_TYPE = 'text';
   const PWD_TYPE = 'password';
+  const NAME = 'passwordInput'
 
   let value = '';
   let type = PWD_TYPE;
@@ -13,11 +14,7 @@
   const setToPasswordType = () => type = PWD_TYPE;
 </script>
 
-<style></style>
+<label for={NAME}>Mot de passe:</label>
+<input id={NAME} {type} {value} autocomplete="new-password" on:keyup={changePasswordType} on:blur={setToTextType} on:focus={setToPasswordType} />
 
-<form class="inputPassword">
-    <label>
-        Mot de passe:
-        <input {type} {value} autocomplete="new-password" on:keyup={changePasswordType} on:blur={setToTextType} on:focus={setToPasswordType} />
-    </label>
-</form>
+<style></style>

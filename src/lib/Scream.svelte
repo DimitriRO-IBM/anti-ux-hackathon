@@ -11,16 +11,16 @@
     then((buffer) => audioCtx.decodeAudioData(buffer)).
     then((decodedData) => {
       // Create bufferSource
-      const bufferSource = audioCtx.createBufferSource();
-      bufferSource.connect(audioCtx.destination);
-      bufferSource.buffer = decodedData;
+      const bufferSource = audioCtx.createBufferSource()
+      bufferSource.connect(audioCtx.destination)
+      bufferSource.buffer = decodedData
 
-      // Resume audioContext in case its not running for any reason
+      // Resume audioContext in case it's not running for any reason
       audioCtx.resume().then(() => {
         // Play audio file
-        bufferSource.start(0);
-      });
-    });
+        bufferSource.start(0)
+      })
+    })
   }
 
   onMount(async () => {
@@ -31,3 +31,5 @@
 <audio {id} autoplay>
     <source {src} type="audio/wav">
 </audio>
+
+<style></style>

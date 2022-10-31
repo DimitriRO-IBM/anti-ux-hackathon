@@ -1,16 +1,23 @@
 <script>
-  import { onMount } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
   import Scream from './Scream.svelte'
 
-  let showIframe = false;
+  const dispatch = createEventDispatcher();
+
+  let src = '/image/creepy.jpg';
+  let showSpookyFrame = false;
 
   function spook() {
     setTimeout(function () {
       document.getElementById('spookTheF').style.display = 'block';
-      showIframe = true;
+      document.getElementById('creepyFace').style.display = 'block';
+      let showSpookyFrame = true;
       document.getElementById('spookTheF').onclick = function () {
-        showIframe = false;
         document.getElementById('spookTheF').style.display = 'none';
+        document.getElementById('creepyFace').style.display = 'none';
+        let showSpookyFrame = false;
+
+        dispatch('closeSpookyFrame', {});
       };
     }, 3000);
   }
@@ -19,6 +26,15 @@
     spook();
   });
 </script>
+
+<div id="spookTheF" on:load={spook}>
+    <img id="creepyFace" {src} alt="A creepy face">
+</div>
+
+{#if showSpookyFrame}
+    <Scream />
+{/if}
+
 <style>
     #spookTheF {
         position: fixed;
@@ -31,10 +47,10 @@
         background-size: cover;
         border: 0;
     }
+
+    #creepyFace {
+        display: none;
+        margin: auto;
+        height: inherit;
+    }
 </style>
-
-<div id="spookTheF" on:load={spook}></div>
-
-{#if showIframe}
-    <Scream />
-{/if}
