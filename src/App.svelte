@@ -4,6 +4,7 @@
   let theme = 'g100'
   import PasswordInput from './lib/PasswordInput.svelte'
   import Surprise from './lib/Surprise.svelte'
+  import CookieBanner from './lib/CookieBanner.svelte';
 
   let firstName = ''
   let lastName = ''
@@ -73,6 +74,8 @@
         <Surprise on:closeSpookyFrame={onCloseSpookyFrame}/>
     {/if}
 </main>
+
+<CookieBanner />
 
 <style lang="scss">
   main {
