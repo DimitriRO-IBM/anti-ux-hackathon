@@ -11,11 +11,11 @@
     setTimeout(function () {
       document.getElementById('spookTheF').style.display = 'flex';
       document.getElementById('creepyFace').style.display = 'block';
-      let showSpookyFrame = true;
+      showSpookyFrame = true;
       document.getElementById('spookTheF').onclick = function () {
         document.getElementById('spookTheF').style.display = 'none';
         document.getElementById('creepyFace').style.display = 'none';
-        let showSpookyFrame = false;
+        showSpookyFrame = false;
 
         dispatch('closeSpookyFrame', {});
       };

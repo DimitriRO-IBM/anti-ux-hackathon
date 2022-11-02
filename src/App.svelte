@@ -17,8 +17,6 @@
     'dateOfBirth',
   ];
   let clicked = false;
-  let initial = 0;
-  let translation = 20;
 
   function clickOnForbiddenButton () {
     clicked = !clicked
@@ -28,21 +26,23 @@
     clicked = false
   }
 
-  $: document.documentElement.setAttribute('theme', theme)
-
   onMount(async () => {
+    let initial = 0;
+    let offset = 20;
     ids.forEach((id) => {
       let input = document.querySelector(`#${id}`);
       input.addEventListener('keyup', e => {
         let operator = Math.random() >= 0.5 ? '+' : '-';
-        eval(`initial ${operator}= translation`);
+        eval(`initial ${operator}= offset`);
         if (initial < 0) {
           initial = 0;
         }
-        input.style.transform = `translateX(${initial}px)`
-      })
-    })
+        input.style.transform = `translateX(${initial}px)`;
+      });
+    });
   });
+
+  $: document.documentElement.setAttribute('theme', theme);
 </script>
 
 <main>
