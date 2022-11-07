@@ -7,15 +7,12 @@
 
   function handleAutoPlay () {
     fetch(src).then((response) => {
-      debugger
       console.info('Transforming the audio file onto a buffer...');
       return response.arrayBuffer();
     }).then((buffer) => {
-      debugger
       console.info('Decoding audio data...');
       return audioCtx.decodeAudioData(buffer);
     }).then((decodedData) => {
-      debugger
       console.info('Creating AudioContext from buffer...');
       // Create bufferSource
       const bufferSource = audioCtx.createBufferSource();

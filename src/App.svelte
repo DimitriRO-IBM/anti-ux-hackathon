@@ -1,16 +1,39 @@
 <script>
-  import { onMount } from 'svelte'
-
-  let theme = 'g100'
-  import PasswordInput from './lib/PasswordInput.svelte'
-  import Surprise from './lib/Surprise.svelte'
+  import { onMount } from 'svelte';
+  import Surprise from './lib/Surprise.svelte';
   import CookieBanner from './lib/CookieBanner.svelte';
 
-  let firstName = ''
-  let lastName = ''
-  let mail = ''
-  let dateOfBirth = ''
-  let password = ''
+  import {
+    Grid,
+    Row,
+    Column,
+    TextInput,
+    PasswordInput,
+    Theme,
+    DatePicker,
+    DatePickerInput,
+  } from 'carbon-components-svelte';
+  import { Button, Modal } from "carbon-components-svelte";
+
+  import { t, locale, locales } from './i18n';
+
+  // Create a locale specific timestamp
+  $: time = new Date().toLocaleDateString($locale, {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+
+  const TEXT_TYPE = 'text';
+  const PWD_TYPE = 'password';
+  const NAME = 'passwordInput';
+
+  let firstName = '';
+  let lastName = '';
+  let mail = '';
+  let dateOfBirth = '';
+  let password = '';
   let ids = [
     'firstName',
     'lastName',
@@ -18,13 +41,22 @@
     'dateOfBirth',
   ];
   let clicked = false;
+  let value = '';
+  let type = PWD_TYPE;
+
+  const changePasswordType = () => {
+    type === PWD_TYPE ? setToTextType() : setToPasswordType();
+  };
+
+  const setToTextType = () => type = TEXT_TYPE;
+  const setToPasswordType = () => type = PWD_TYPE;
 
   function clickOnForbiddenButton () {
-    clicked = !clicked
+    // clicked = !clicked;
   }
 
   function onCloseSpookyFrame () {
-    clicked = false
+    clicked = false;
   }
 
   onMount(async () => {
@@ -42,62 +74,59 @@
       });
     });
   });
-
-  $: document.documentElement.setAttribute('theme', theme);
 </script>
 
 <main>
-    <div class="form">
-        <div class="formField">
-            <label for="firstName">Prénom:</label>
-            <input type="text" id="firstName" bind:value={firstName}>
-        </div>
-        <div class="formField">
-            <label for="lastName">Nom:</label>
-            <input type="text" id="lastName" bind:value={lastName}>
-        </div>
-        <div class="formField">
-            <label for="mail">Adresse mail:</label>
-            <input type="text" id="mail" bind:value={mail}>
-        </div>
-        <div class="formField">
-            <label for="dateOfBirth">Date de naissance:</label>
-            <input type="text" id="dateOfBirth" bind:value={dateOfBirth}>
-        </div>
-        <div class="formField">
-            <PasswordInput/>
-        </div>
-        <button on:click={clickOnForbiddenButton}>DON'T CLICK ME !</button>
+    <div class="theme-container">
+        <Theme render="select" />
     </div>
+    <Grid padding>
+        <Row>
+            <TextInput id="firstName" labelText={ $t('form.labels.firstName') } bind:value={firstName}></TextInput>
+        </Row>
+        <Row>
+            <TextInput id="lastName" labelText={ $t('form.labels.lastName') } bind:value={lastName}></TextInput>
+        </Row>
+        <Row>
+            <TextInput id="mail" labelText={ $t('form.labels.mail') } bind:value={mail}></TextInput>
+        </Row>
+        <Row>
+            <DatePicker datePickerType="single" on:change>
+                <DatePickerInput id="dateOfBirth" labelText={ $t('form.labels.dateOfBirth') } placeholder="mm/dd/yyyy" bind:value={dateOfBirth} />
+            </DatePicker>
+        </Row>
+        <Row>
+            <PasswordInput labelText={ $t('form.labels.password') } {type} {value} on:keyup={changePasswordType} on:blur={setToTextType}
+                           on:focus={setToPasswordType}></PasswordInput>
+        </Row>
+        <Row>
+            <Button id="submitForm" on:click={clickOnForbiddenButton}>{ $t('form.submit.button') }</Button>
+        </Row>
+    </Grid>
 
     {#if clicked}
         <Surprise on:closeSpookyFrame={onCloseSpookyFrame}/>
     {/if}
 </main>
 
-<CookieBanner />
+<CookieBanner/>
 
 <style lang="scss">
   main {
     width: 100vw;
     height: 100vh;
-  }
 
-  .form {
-    display: grid;
-    align-items: center;
-    justify-items: center;
-    align-content: center;
-    height: 100%;
-  }
+    .theme-container {
+      display: block;
+      min-width: 8vw;
+      max-width: 20vw;
+      padding-bottom: 3rem;
+      margin-top: 1em;
+      margin-left: 1.3em;
+    }
 
-  .formField {
-    width: 100%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-evenly;
-
-    label {
+    :global(.bx--grid) {
+        width: 50%;
     }
   }
 </style>

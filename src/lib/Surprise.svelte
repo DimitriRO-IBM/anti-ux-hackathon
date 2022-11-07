@@ -38,14 +38,21 @@
 <style>
     #spookTheF {
         justify-content: center;
+
         position: fixed;
         top: 0;
         left: 0;
+
+        z-index: 100;
+
         display: none;
+
         height: 100%;
         width: 100%;
+
         background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), no-repeat, #000;
         background-size: cover;
+
         border: 0;
     }
 
