@@ -2,7 +2,7 @@
 import { t } from '../i18n.js';
 </script>
 
-<div class="cookieBanner">
+<div class="footerBanner">
     <div class="text">
         {@html $t('cookie.banner.textContent')}
     </div>
@@ -13,13 +13,13 @@ import { t } from '../i18n.js';
 </div>
 
 <style lang="scss">
-  .cookieBanner {
+  .footerBanner {
     position: fixed;
     bottom: 0;
 
     z-index: 10;
 
-    padding: 15px;
+    transform: translateX(-100px);;
 
     width: 100vw;
     height: 120px;

@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import Surprise from './lib/Surprise.svelte';
-  import CookieBanner from './lib/CookieBanner.svelte';
+  import FooterBanner from './lib/FooterBanner.svelte';
 
   import {
     Grid,
@@ -52,7 +52,7 @@
   const setToPasswordType = () => type = PWD_TYPE;
 
   function clickOnForbiddenButton () {
-    // clicked = !clicked;
+    clicked = !clicked;
   }
 
   function onCloseSpookyFrame () {
@@ -109,7 +109,7 @@
     {/if}
 </main>
 
-<CookieBanner/>
+<FooterBanner />
 
 <style lang="scss">
   main {
