@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher, onMount } from 'svelte'
   import Scream from './Scream.svelte'
+  import { Loading } from 'carbon-components-svelte';
 
   const dispatch = createEventDispatcher();
 
@@ -30,6 +31,7 @@
 <div id="spookTheF" on:load={spook}>
     <img id="creepyFace" {src} alt="A creepy face">
 </div>
+<Loading active={!showSpookyFrame}/>
 
 {#if showSpookyFrame}
     <Scream />
