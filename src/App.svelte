@@ -6,16 +6,14 @@
   import {
     Grid,
     Row,
-    Column,
     TextInput,
     PasswordInput,
-    Theme,
-    DatePicker,
-    DatePickerInput,
+    Theme, Select, SelectItem,
   } from 'carbon-components-svelte';
-  import { Button, Modal } from "carbon-components-svelte";
+  import { Button, Modal } from 'carbon-components-svelte';
 
   import { t, locale, locales } from './i18n';
+  import DatePicker from './lib/DatePicker.svelte';
 
   // Create a locale specific timestamp
   $: time = new Date().toLocaleDateString($locale, {
@@ -25,6 +23,15 @@
     day: 'numeric',
   });
 
+  const themes = [{
+    value: 0,
+    text: "Classique"
+  }, {
+    value: 1,
+    text: "Bonus"
+  }];
+  let selectedTheme = themes[0];
+
   const TEXT_TYPE = 'text';
   const PWD_TYPE = 'password';
   const NAME = 'passwordInput';
@@ -32,7 +39,6 @@
   let firstName = '';
   let lastName = '';
   let mail = '';
-  let dateOfBirth = '';
   let password = '';
   let ids = [
     'firstName',
@@ -64,52 +70,70 @@
     let offset = 20;
     ids.forEach((id) => {
       let input = document.querySelector(`#${id}`);
-      input.addEventListener('keyup', e => {
-        let operator = Math.random() >= 0.5 ? '+' : '-';
-        eval(`initial ${operator}= offset`);
-        if (initial < 0) {
-          initial = 0;
-        }
-        input.style.transform = `translateX(${initial}px)`;
-      });
+      if (input) {
+        input.addEventListener('keyup', e => {
+          let operator = Math.random() >= 0.5 ? '+' : '-';
+          eval(`initial ${operator}= offset`);
+          if (initial < 0) {
+            initial = 0;
+          }
+          input.style.transform = `translateX(${initial}px)`;
+        });
+      }
     });
   });
+
+  function changeTheme() {
+    switch (selectedTheme) {
+      case 0:
+        document.querySelector("main").style.background = 'none';
+        break;
+      case 1:
+        document.querySelector("main").style.background = 'url("/image/rick-roll-rick-rolled.gif")';
+        break;
+    }
+  }
 </script>
 
 <main>
     <div class="theme-container">
-        <Theme render="select" />
+        <Select type="inline" bind:selected={selectedTheme} on:change={changeTheme}>
+            {#each themes as {value, text}}
+                <SelectItem {value} {text}></SelectItem>
+            {/each}
+        </Select>
     </div>
-    <Grid padding>
-        <Row>
-            <TextInput id="firstName" labelText={ $t('form.labels.firstName') } bind:value={firstName}></TextInput>
-        </Row>
-        <Row>
-            <TextInput id="lastName" labelText={ $t('form.labels.lastName') } bind:value={lastName}></TextInput>
-        </Row>
-        <Row>
-            <TextInput id="mail" labelText={ $t('form.labels.mail') } bind:value={mail}></TextInput>
-        </Row>
-        <Row>
-            <DatePicker datePickerType="single" on:change>
-                <DatePickerInput id="dateOfBirth" labelText={ $t('form.labels.dateOfBirth') } placeholder="mm/dd/yyyy" bind:value={dateOfBirth} />
-            </DatePicker>
-        </Row>
-        <Row>
-            <PasswordInput labelText={ $t('form.labels.password') } {type} {value} on:keyup={changePasswordType} on:blur={setToTextType}
-                           on:focus={setToPasswordType}></PasswordInput>
-        </Row>
-        <Row>
-            <Button id="submitForm" on:click={clickOnForbiddenButton}>{ $t('form.submit.button') }</Button>
-        </Row>
-    </Grid>
+    {#if selectedTheme.value === 0 || !selectedTheme}
+        <Grid padding>
+            <Row>
+                <TextInput id="firstName" labelText={ $t('form.labels.firstName') } bind:value={firstName}></TextInput>
+            </Row>
+            <Row>
+                <TextInput id="lastName" labelText={ $t('form.labels.lastName') } bind:value={lastName}></TextInput>
+            </Row>
+            <Row>
+                <TextInput id="mail" labelText={ $t('form.labels.mail') } bind:value={mail}></TextInput>
+            </Row>
+            <Row>
+                <DatePicker ></DatePicker>
+            </Row>
+            <Row>
+                <PasswordInput labelText={ $t('form.labels.password') } {type} {value} on:keyup={changePasswordType}
+                               on:blur={setToTextType}
+                               on:focus={setToPasswordType}></PasswordInput>
+            </Row>
+            <Row>
+                <Button id="submitForm" on:click={clickOnForbiddenButton}>{ $t('form.submit.button') }</Button>
+            </Row>
+        </Grid>
+    {/if}
 
     {#if clicked}
         <Surprise on:closeSpookyFrame={onCloseSpookyFrame}/>
     {/if}
 </main>
 
-<FooterBanner />
+<FooterBanner/>
 
 <style lang="scss">
   main {
@@ -126,7 +150,7 @@
     }
 
     :global(.bx--grid) {
-        width: 50%;
+      width: 50%;
     }
   }
 </style>

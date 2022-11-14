@@ -1,5 +1,9 @@
 <script>
 import { t } from '../i18n.js';
+import { Button, Modal } from 'carbon-components-svelte';
+
+let openLeft = false;
+let openRight = false;
 </script>
 
 <div class="footerBanner">
@@ -7,10 +11,18 @@ import { t } from '../i18n.js';
         {@html $t('cookie.banner.textContent')}
     </div>
     <div class="buttons">
-        <button type="button">{ $t('cookie.banner.leftButton') }</button>
-        <button type="button">{ $t('cookie.banner.rightButton') }</button>
+        <Button kind="tertiary" on:click={() => openLeft = true}>{ $t('cookie.banner.leftButton') }</Button>
+        <Button kind="danger" on:click={() => openRight = true}>{ $t('cookie.banner.rightButton') }</Button>
     </div>
 </div>
+
+<Modal passiveModal bind:open={openLeft} modalHeading="Oops, je suis très gêné de mon oubli." on:open on:close>
+    <p>J'ai oublié de mettre le code pour faire fonctionner l'Internet.</p>
+</Modal>
+
+<Modal passiveModal bind:open={openRight} modalHeading="Oops, je suis très gêné de mon oubli." on:open on:close>
+    <p>J'ai pas été meilleur sur ce bouton-ci... Bien que je sois très touché par la confiance qui m'a été fournie - cliquer sur le second bouton alors qu'on a déjà tenté le premier, ça relève de l'exploit quand même.</p>
+</Modal>
 
 <style lang="scss">
   .footerBanner {
